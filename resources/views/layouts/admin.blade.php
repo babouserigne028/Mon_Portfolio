@@ -40,7 +40,7 @@
                 </h2>
             </div>
             <div class="flex items-center gap-4">
-                <span class="text-sm font-bold text-slate-900">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
+                <span class="text-sm font-bold text-slate-900">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">

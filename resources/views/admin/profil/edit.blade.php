@@ -5,7 +5,7 @@
     <div class="flex items-center justify-between mb-8">
         <h1 class="text-3xl font-bold tracking-tight text-slate-900">Mon Profil</h1>
         <span class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20">
-            Admin Kingston
+            Admin
         </span>
     </div>
 
@@ -29,13 +29,17 @@
                     </label>
                     <input type="file" name="photo" id="photo" class="hidden">
                 </div>
-                <!-- Affichage combiné pour l'aperçu -->
-                <h3 class="font-bold text-slate-900">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h3>
+                <h3 class="font-bold text-slate-900">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h3>
                 <p class="text-xs text-slate-500 mb-4">Fullstack Developer</p>
                 
                 <div class="border-t border-slate-100 pt-4">
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Curriculum Vitae</label>
                     <input type="file" name="lien_cv" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-600 hover:file:bg-slate-200 cursor-pointer">
+                    @if(Auth::user()->lien_cv)
+                        <a href="{{ asset('storage/' . Auth::user()->lien_cv) }}" target="_blank" class="text-xs text-primary hover:underline mt-2 block flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined text-[10px]">visibility</span> Voir le CV actuel
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -48,11 +52,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <label class="text-xs font-bold uppercase text-slate-500">Prénom</label>
-                        <input type="text" name="first_name" value="{{ Auth::user()->first_name }}" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary bg-slate-50/30 transition" placeholder="Ex: Serigne Abdoulaye">
+                        <input type="text" name="first_name" value="{{ Auth::user()->prenom }}" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary bg-slate-50/30 transition" placeholder="Ex: Serigne Abdoulaye">
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs font-bold uppercase text-slate-500">Nom</label>
-                        <input type="text" name="last_name" value="{{ Auth::user()->last_name }}" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary bg-slate-50/30 transition" placeholder="Ex: Babou">
+                        <input type="text" name="last_name" value="{{ Auth::user()->nom }}" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary bg-slate-50/30 transition" placeholder="Ex: Babou">
                     </div>
                 </div>
 

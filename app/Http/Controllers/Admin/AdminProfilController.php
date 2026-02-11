@@ -19,11 +19,15 @@ class AdminProfilController extends Controller
 
     public function update(Request $request)
     {
+<<<<<<< HEAD
         // 1. On récupère l'utilisateur à modifier (celui qui est connecté)
         $utilisateur = Utilisateur::find(Auth::id());
+=======
+        $user = User::find(Auth::id());
+>>>>>>> a4de82a (Finalisation Admin Kingston : En utilisant Utilisateur)
 
-        // 2. Validation des données du formulaire
         $request->validate([
+<<<<<<< HEAD
             'first_name'            => 'required|string|max:100',
             'last_name'             => 'required|string|max:100',
             'email'                 => 'required|email|unique:utilisateurs,email,' . $utilisateur->id,
@@ -44,6 +48,27 @@ class AdminProfilController extends Controller
         }
         if (Schema::hasColumn('utilisateurs', 'nbre_annee_experience')) {
             $utilisateur->nbre_annee_experience = $request->input('nbre_annee_experience');
+=======
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'email' => 'required|email|unique:utilisateurs,email,' . $user->id, 
+            'apropos' => 'nullable|string',
+            'nbre_annee_experience' => 'nullable|integer',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'lien_cv' => 'nullable|mimes:pdf|max:5000',
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        $user->prenom = $request->first_name;
+        $user->nom = $request->last_name;
+        $user->email = $request->email;
+        
+        if (Schema::hasColumn('utilisateurs', 'apropos')) {
+            $user->apropos = $request->apropos;
+        }
+        if (Schema::hasColumn('utilisateurs', 'nbre_annee_experience')) {
+            $user->nbre_annee_experience = $request->nbre_annee_experience;
+>>>>>>> a4de82a (Finalisation Admin Kingston : En utilisant Utilisateur)
         }
 
         if ($request->hasFile('photo')) {
@@ -54,7 +79,6 @@ class AdminProfilController extends Controller
             $utilisateur->photo = $request->file('photo')->store('profil', 'public');
         }
 
-        // Gestion du CV
         if ($request->hasFile('lien_cv')) {
             if ($utilisateur->lien_cv) {
                 Storage::disk('public')->delete($utilisateur->lien_cv);
@@ -62,6 +86,7 @@ class AdminProfilController extends Controller
 
             $utilisateur->lien_cv = $request->file('lien_cv')->store('cv', 'public');
         }
+<<<<<<< HEAD
 
         // Gestion du nouveau mot de passe
         if ($request->filled('password')) {
@@ -72,8 +97,16 @@ class AdminProfilController extends Controller
         if ($utilisateur instanceof Utilisateur) {
             $utilisateur->save();
         }
+=======
+        
+        if ($request->filled('password')) {
+            // On enregistre dans "mot_de_passe"
+            $user->mot_de_passe = Hash::make($request->password);
+        }
 
-        // 5. Redirection avec un message de succès
-        return redirect()->route('admin.profil.edit')->with('success', 'Profil mis à jour avec succès !');
+        $user->save();
+>>>>>>> a4de82a (Finalisation Admin Kingston : En utilisant Utilisateur)
+
+        return redirect()->route('admin.profil.edit')->with('success', 'Profil Kingston mis à jour !');
     }
 }
