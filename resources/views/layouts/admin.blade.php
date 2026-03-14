@@ -1,86 +1,102 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | Kingston.{{ $nom ?? 'Portfolio' }}</title>
-    <!-- Google Fonts & Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3b82f6', // Remplace par ton code couleur exact si besoin
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        .active-link { @apply text-primary bg-primary/5 border-r-4 border-primary; }
+        .active-link {
+            border-right: 4px solid #2563EB;
+            background-color: #2563EB0D;
+            color: #2563EB;
+        }
     </style>
 </head>
-<body class="bg-slate-50/50 text-slate-900">
 
-    <!-- Navbar identique à ton header -->
-    <header class="fixed top-0 z-50 w-full border-b border-slate-200/60 bg-white/80 backdrop-blur-md px-6 py-4">
-        <div class="flex items-center justify-between mx-auto">
-            <div class="flex items-center gap-2">
-                <div class="p-1.5 bg-primary rounded-lg text-white">
-                    <span class="material-symbols-outlined block">terminal</span>
+<body class="bg-background text-primary font-body antialiased">
+
+    <!-- Navbar — même style que le header utilisateur -->
+    <nav class="fixed top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-primary/10" role="navigation"
+        aria-label="Navigation administration">
+        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+
+                <!-- Logo -->
+                <a href="{{ route('admin.dashboard') }}"
+                    class="font-display text-3xl text-primary hover:text-cta transition-colors duration-250 cursor-pointer"
+                    aria-label="Dashboard Admin">
+                    Rignsei.<span class="text-cta text-2xl">admin</span>
+                </a>
+
+                <!-- Infos utilisateur + déconnexion -->
+                <div class="flex items-center space-x-6">
+                    <span class="hidden md:block text-sm font-medium text-secondary">
+                        {{ Auth::user()->prenom }} {{ Auth::user()->nom }}
+                    </span>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center gap-2 px-6 py-3 bg-cta text-white rounded-full hover:bg-cta/90 transition-all duration-300 font-semibold min-h-11 text-sm cursor-pointer">
+                            <span class="material-symbols-outlined text-base">logout</span>
+                            Déconnexion
+                        </button>
+                    </form>
                 </div>
-                <h2 class="text-xl font-bold tracking-tight text-slate-900">
-                    Kingston<span class="text-primary">.Admin</span>
-                </h2>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-sm font-bold text-slate-900">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
-                        <span class="material-symbols-outlined text-sm">logout</span> Déconnexion
-                    </button>
-                </form>
+
             </div>
         </div>
-    </header>
+    </nav>
 
     <div class="flex pt-20">
-        <!-- Sidebar Kingston -->
-        <aside class="fixed left-0 w-64 h-full bg-white border-r border-slate-200/60 p-4">
+        <!-- Sidebar -->
+        <aside class="fixed left-0 w-64 h-full bg-background border-r border-primary/10 p-4">
             <nav class="flex flex-col gap-2">
-                <p class="px-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Menu Principal</p>
-                
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.dashboard') ? 'text-primary bg-primary/5' : 'text-slate-600 hover:bg-slate-50' }}">
+                <p class="px-4 text-[10px] font-bold uppercase tracking-widest text-secondary/50 mb-2">Menu Principal
+                </p>
+
+                <a href="{{ route('admin.dashboard') }}"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.dashboard') ? 'text-cta bg-cta/5' : 'text-secondary hover:bg-primary/5' }}">
                     <span class="material-symbols-outlined">dashboard</span> Dashboard
                 </a>
 
-                <p class="px-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-6 mb-2">Contenu</p>
+                <p class="px-4 text-[10px] font-bold uppercase tracking-widest text-secondary/50 mt-6 mb-2">Contenu</p>
 
-                <a href="{{ route('admin.profil.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.profil.*') ? 'text-primary bg-primary/5' : 'text-slate-600 hover:bg-slate-50' }}">
+                <a href="{{ route('admin.profil.edit') }}"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.profil.*') ? 'text-cta bg-cta/5' : 'text-secondary hover:bg-primary/5' }}">
                     <span class="material-symbols-outlined">person</span> Mon Profil
                 </a>
 
-                <a href="{{ route('admin.projets.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.projets.*') ? 'text-primary bg-primary/5' : 'text-slate-600 hover:bg-slate-50' }}">
+                <a href="{{ route('admin.projets.index') }}"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.projets.*') ? 'text-cta bg-cta/5' : 'text-secondary hover:bg-primary/5' }}">
                     <span class="material-symbols-outlined">layers</span> Projets
                 </a>
 
-                <a href="{{ route('admin.technologies.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.technologies.*') ? 'text-primary bg-primary/5' : 'text-slate-600 hover:bg-slate-50' }}">
+                <a href="{{ route('admin.technologies.index') }}"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.technologies.*') ? 'text-cta bg-cta/5' : 'text-secondary hover:bg-primary/5' }}">
                     <span class="material-symbols-outlined">architecture</span> Technologies
+                </a>
+
+                <a href="{{ route('admin.domaines.index') }}"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ request()->routeIs('admin.domaines.*') ? 'text-cta bg-cta/5' : 'text-secondary hover:bg-primary/5' }}">
+                    <span class="material-symbols-outlined">category</span> Domaines de Compétence
                 </a>
             </nav>
         </aside>
 
         <!-- Main Content -->
-        <main class="ml-64 w-full p-8">
-            @if(session('success'))
-                <div class="mb-6 flex items-center gap-3 rounded-xl border border-emerald-100 bg-emerald-50/50 p-4 text-sm font-medium text-emerald-600">
+        <main class="ml-64 w-full p-6">
+            @if (session('success'))
+                <div
+                    class="mb-6 flex items-center gap-3 rounded-xl border border-success/20 bg-success/5 p-4 text-sm font-medium text-success">
                     <span class="material-symbols-outlined">check_circle</span>
                     {{ session('success') }}
                 </div>
@@ -89,5 +105,7 @@
         </main>
     </div>
 
+    @stack('scripts')
 </body>
+
 </html>

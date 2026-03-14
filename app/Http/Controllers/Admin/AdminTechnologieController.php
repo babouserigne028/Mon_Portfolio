@@ -12,7 +12,8 @@ class AdminTechnologieController extends Controller
     public function index()
     {
         $technologies = Technologie::with('domaines')->get();
-        return view('admin.technologies.index', compact('technologies'));
+        $domaines     = DomaineCompetence::all();
+        return view('admin.technologies.index', compact('technologies', 'domaines'));
     }
 
     public function create()

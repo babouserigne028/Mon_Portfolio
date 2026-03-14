@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap";
-@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,51 +6,64 @@
 @source '../**/*.js';
 
 @theme {
-    /* Tes couleurs */
-    --color-primary: #137fec;
-    --color-background-light: #f6f7f8;
+    /* Colors */
+    --color-primary: #18181B;
+    --color-secondary: #3F3F46;
+    --color-cta: #2563EB;
+    --color-background: #FAFAFA;
+    --color-background-light: #FAFAFA;
+    --color-success: #22C55E;
+    --color-error: #EF4444;
 
-    /* Ta police Inter */
-    --font-display: "Inter", sans-serif;
+    /* Typography */
+    --font-display: "Caveat", cursive;
+    --font-body: "Quicksand", sans-serif;
 
-    /* Tes arrondis */
-    --radius-default: 0.25rem;
-    --radius-lg: 0.5rem;
-    --radius-xl: 0.75rem;
-    --radius-full: 9999px;
+    /* Transition durations */
+    --transition-duration-250: 250ms;
+    --transition-duration-300: 300ms;
+    --transition-duration-400: 400ms;
 }
 
-.material-symbols-outlined {
-    font-variation-settings:
-        "FILL" 0,
-        "wght" 400,
-        "GRAD" 0,
-        "opsz" 24;
+/* Scroll reveal animation (Intersection Observer) */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
 
+/* Keyboard focus visible */
+:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #FAFAFA; }
+::-webkit-scrollbar-thumb { background: #3F3F46; border-radius: 4px; }
+
+/* Keyframe for fadeUp (kept for compatibility) */
 @layer utilities {
   @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
-
-@layer utilities {
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }

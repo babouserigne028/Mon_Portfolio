@@ -1,40 +1,41 @@
 @props(['projets'])
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     @foreach ($projets as $projet)
-        <div
-            class="project-card group bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 opacity-0 scale-95 animate-[scaleIn_250ms_ease-out_forwards]">
+        <article class="reveal group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-[400ms] cursor-pointer border border-primary/5">
+
             <div class="relative aspect-video overflow-hidden">
-                <div class="w-full h-full bg-cover bg-center bg-slate-100" data-alt="{{ $projet->nom }}"
-                    style="background-image: url('{{ asset('storage/' . $projet->image_couverture) }}');">
-                </div>
-                <div
-                    class="hover-overlay absolute inset-0 bg-slate-900/80 opacity-0 flex flex-col items-center justify-center gap-4 transition-opacity">
-                    <button
-                        class="w-48 py-2.5 bg-primary text-white rounded-lg font-bold flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-sm">visibility</span>
-                        Voir le projet
-                    </button>
-                    <button
-                        class="w-48 py-2.5 bg-white/10 text-white border border-white/20 hover:bg-white/20 rounded-lg font-bold flex items-center justify-center gap-2 backdrop-blur-sm">
-                        <span class="material-symbols-outlined text-sm">code</span>
-                        Voir le code
-                    </button>
+                <img
+                    src="{{ asset('storage/' . $projet->image_couverture) }}"
+                    alt="{{ $projet->nom }}"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[400ms]"
+                    loading="lazy" />
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                    <a href="{{ route('projets') }}"
+                        class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary hover:bg-cta hover:text-white transition-colors duration-[250ms] cursor-pointer"
+                        aria-label="Voir le projet">
+                        <i data-lucide="external-link" class="w-5 h-5"></i>
+                    </a>
+                    @if($projet->lien_github ?? false)
+                    <a href="{{ $projet->lien_github }}" target="_blank" rel="noopener noreferrer"
+                        class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary hover:bg-cta hover:text-white transition-colors duration-[250ms] cursor-pointer"
+                        aria-label="Voir le code source">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                    @endif
                 </div>
             </div>
+
             <div class="p-6">
-                <h3 class="text-slate-900 text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                    {{ $projet->nom }}
-                </h3>
-                <p class="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-2">
-                    {{ $projet->description }}
-                </p>
+                <h3 class="font-semibold text-xl text-primary mb-2">{{ $projet->nom }}</h3>
+                <p class="text-secondary mb-4 leading-relaxed line-clamp-2">{{ $projet->description }}</p>
                 <div class="flex flex-wrap gap-2">
                     @foreach ($projet->technologies as $techno)
-                        <span
-                            class="px-2.5 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded">{{ $techno->nom }}</span>
+                        <span class="px-3 py-1 bg-cta/10 text-cta text-sm rounded-full font-medium">{{ $techno->nom }}</span>
                     @endforeach
                 </div>
             </div>
-        </div>
+
+        </article>
     @endforeach
 </div>

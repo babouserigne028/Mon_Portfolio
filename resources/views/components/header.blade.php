@@ -1,67 +1,74 @@
-@props(['nom'])
-<header class="fixed top-0 z-50 w-full border-b border-slate-200/60 bg-white/80 backdrop-blur-md px-6 py-4">
-    <div class="flex items-center justify-between mx-auto">
-        <!-- Logo -->
-        <div class="flex items-center gap-2 group cursor-pointer" onclick="window.location.href='{{ route('acceuil') }}'">
-            <div class="p-1.5 bg-primary rounded-lg text-white">
-                <span class="material-symbols-outlined block">terminal</span>
-            </div>
-            <h2 class="text-xl font-bold tracking-tight text-slate-900 leading-none">
-                Kingston<span class="text-primary">.{{ $nom }}</span>
-            </h2>
-        </div>
+@props(['nom', 'prenom' => ''])
+<nav class="fixed w-full bg-background/95 backdrop-blur-sm z-50 border-b border-primary/10"
+     role="navigation"
+     aria-label="Navigation principale">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
 
-        <!-- Navigation Desktop -->
-        <nav class="hidden md:flex items-center gap-10">
-            <a class="text-sm font-bold transition-colors {{ request()->routeIs('acceuil') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                href="{{ route('acceuil') }}">Accueil</a>
-            <a class="text-sm font-bold transition-colors {{ request()->routeIs('projets') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                href="{{ route('projets') }}">Projets</a>
-            <a class="text-sm font-bold transition-colors {{ request()->routeIs('a_propos') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                href="{{ route('a_propos') }}">À propos</a>
-            <a class="text-sm font-bold transition-colors {{ request()->routeIs('contact') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                href="{{ route('contact') }}">Contacte</a>
-        </nav>
-
-        <!-- Actions Desktop -->
-        <div class="flex items-center gap-3">
-            <!-- Nouveau bouton Admin -->
-            <a href="{{ route('login') }}" 
-                class="hidden sm:flex items-center justify-center rounded-lg border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-95">
-                <span class="material-symbols-outlined text-sm mr-2">admin_panel_settings</span>
-                Admin
+            <!-- Logo -->
+            <a href="{{ route('acceuil') }}"
+                class="font-display text-3xl text-primary hover:text-cta transition-colors duration-[250ms] cursor-pointer"
+                aria-label="Accueil">
+                Rignsei.
             </a>
 
-            <!-- Bouton Contact -->
-            <button onclick="window.location.href='{{ route('contact') }}'"
-                class="hidden sm:flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-primary/90 transition-all active:scale-95">
-                Contactez-Moi
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="{{ route('acceuil') }}"
+                    class="text-secondary hover:text-cta transition-colors duration-[250ms] cursor-pointer font-medium
+                           {{ request()->routeIs('acceuil') ? 'text-cta' : '' }}">
+                    Accueil
+                </a>
+                <a href="{{ route('projets') }}"
+                    class="text-secondary hover:text-cta transition-colors duration-[250ms] cursor-pointer font-medium
+                           {{ request()->routeIs('projets') ? 'text-cta' : '' }}">
+                    Projets
+                </a>
+                <a href="{{ route('a_propos') }}"
+                    class="text-secondary hover:text-cta transition-colors duration-[250ms] cursor-pointer font-medium
+                           {{ request()->routeIs('a_propos') ? 'text-cta' : '' }}">
+                    À propos
+                </a>
+                <a href="{{ route('contact') }}"
+                    class="px-6 py-3 bg-cta text-white rounded-full hover:bg-cta/90 transition-all duration-300 cursor-pointer font-semibold min-h-[44px] flex items-center">
+                    Contact
+                </a>
+            </div>
+
+            <!-- Mobile menu button (44x44 touch target) -->
+            <button id="mobile-menu-btn"
+                class="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center text-primary cursor-pointer"
+                aria-label="Ouvrir le menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
-
-            <!-- Menu mobile toggle -->
-            <div class="md:hidden flex items-center">
-                <button id="mobile-menu-btn" class="p-2 rounded-lg text-primary focus:outline-none"
-                    onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                    <span class="material-symbols-outlined">menu</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Menu mobile dropdown -->
-        <div id="mobile-menu"
-            class="md:hidden absolute top-16 left-0 w-full bg-white border-b border-slate-200/60 shadow-lg hidden z-50">
-            <div class="flex flex-col items-center gap-4 py-4">
-                <a class="text-sm font-bold transition-colors {{ request()->routeIs('acceuil') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                    href="{{ route('acceuil') }}">Accueil</a>
-                <a class="text-sm font-bold transition-colors {{ request()->routeIs('projets') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                    href="{{ route('projets') }}">Projets</a>
-                <a class="text-sm font-bold transition-colors {{ request()->routeIs('a_propos') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                    href="{{ route('a_propos') }}">À propos</a>
-                <a class="text-sm font-bold transition-colors {{ request()->routeIs('contact') ? 'text-primary' : 'text-slate-600 hover:text-primary' }}"
-                    href="{{ route('contact') }}">Contacte</a>
-                <hr class="w-full border-slate-100">
-                <a href="{{ route('login') }}" class="text-sm font-bold text-slate-600">Administration</a>
-            </div>
         </div>
     </div>
-</header>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu"
+        class="hidden md:hidden bg-background border-t border-primary/10"
+        role="menu">
+        <div class="px-4 py-6 space-y-4">
+            <a href="{{ route('acceuil') }}"
+                class="block py-3 text-secondary hover:text-cta transition-colors duration-[250ms] cursor-pointer font-medium
+                       {{ request()->routeIs('acceuil') ? 'text-cta' : '' }}"
+                role="menuitem">Accueil</a>
+            <a href="{{ route('projets') }}"
+                class="block py-3 text-secondary hover:text-cta transition-colors duration-[250ms] cursor-pointer font-medium
+                       {{ request()->routeIs('projets') ? 'text-cta' : '' }}"
+                role="menuitem">Projets</a>
+            <a href="{{ route('a_propos') }}"
+                class="block py-3 text-secondary hover:text-cta transition-colors duration-[250ms] cursor-pointer font-medium
+                       {{ request()->routeIs('a_propos') ? 'text-cta' : '' }}"
+                role="menuitem">À propos</a>
+            <a href="{{ route('contact') }}"
+                class="block py-3 text-cta font-semibold cursor-pointer"
+                role="menuitem">Contact</a>
+            <a href="{{ route('login') }}"
+                class="block py-3 text-secondary hover:text-cta transition-colors duration-[250ms] cursor-pointer font-medium"
+                role="menuitem">Administration</a>
+        </div>
+    </div>
+</nav>

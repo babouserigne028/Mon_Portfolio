@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\DomaineCompetence;
 use App\Models\Projet;
 use App\Models\Utilisateur;
@@ -38,4 +39,25 @@ public function acceuil()
         'nbre_annee_experience', 'photo', 'lien_cv', 'domaines', 'projets'
     ));
 >>>>>>> a4de82a (Finalisation Admin Kingston : En utilisant Utilisateur)
+=======
+use \App\Models\DomaineCompetence;
+use \App\Models\Projet;
+use \App\Models\Utilisateur;
+
+class AcceuilController extends Controller
+{
+    public function acceuil()
+    {
+        $utilisateur = Utilisateur::first();
+        if (! $utilisateur) {
+            return "Base de données vide ! Lancez le seeder.";
+        }
+        $domaines = DomaineCompetence::with('technologies')->get();
+        $projets  = Projet::with('technologies')->get();
+
+        return view('pages.acceuil', compact(
+            'utilisateur', 'domaines', 'projets'
+        ));
+    }
+>>>>>>> d656bf2 (final commit)
 }

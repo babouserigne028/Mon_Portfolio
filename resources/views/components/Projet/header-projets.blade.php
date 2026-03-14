@@ -1,28 +1,31 @@
 @props(['technologies'])
-<div class="mb-12">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-        <div class="max-w-2xl">
-            <h1 class="text-slate-900 text-4xl font-extrabold tracking-tight mb-4">
-                Galerie de Projets
-            </h1>
-            <p class="text-slate-600 text-lg">
-                Une sélection soignée de modèles d’architecture, d’outils open-source et d’applications
-                professionnelles que j’ai conçus de A à Z.
-            </p>
-        </div>
+<div class="mb-14 reveal">
+
+    <div class="text-center mb-10">
+        <p class="text-cta font-semibold mb-4">Portfolio</p>
+        <h1 class="font-display text-4xl md:text-5xl text-primary mb-4">
+            Galerie de Projets
+        </h1>
+        <p class="text-secondary max-w-2xl mx-auto leading-relaxed">
+            Une sélection soignée de modèles d'architecture, d'outils open-source et d'applications
+            professionnelles que j'ai conçus de A à Z.
+        </p>
     </div>
-    <div class="flex gap-2.5 flex-wrap">
-        <button onclick="window.location='?techno='"
-            class="px-5 py-2 rounded-full text-sm font-semibold transition-all
-                {{ empty(request('techno')) ? 'bg-primary text-white shadow-md shadow-primary/20' : 'bg-white border border-slate-200 text-slate-600 hover:border-primary hover:text-primary' }}">
+
+    <!-- Filtres -->
+    <div class="flex gap-2.5 flex-wrap justify-center">
+        <a href="{{ url('/projet') }}"
+            class="px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-[250ms] cursor-pointer min-h-[44px] flex items-center
+                {{ empty(request('techno')) ? 'bg-cta text-white shadow-sm shadow-cta/20' : 'bg-white border border-primary/20 text-secondary hover:border-cta hover:text-cta' }}">
             Tous
-        </button>
+        </a>
         @foreach ($technologies as $techno)
-            <button onclick="window.location='?techno={{ $techno->nom }}'"
-                class="px-5 py-2 rounded-full text-sm font-medium transition-all
-                    {{ request('techno') === $techno->nom ? 'bg-primary text-white border-primary shadow-md shadow-primary/20' : 'bg-white border border-slate-200 text-slate-600 hover:border-primary hover:text-primary' }}">
+            <a href="{{ url('/projet?techno=' . urlencode($techno->nom)) }}"
+                class="px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-[250ms] cursor-pointer min-h-[44px] flex items-center
+                    {{ request('techno') === $techno->nom ? 'bg-cta text-white shadow-sm shadow-cta/20' : 'bg-white border border-primary/20 text-secondary hover:border-cta hover:text-cta' }}">
                 {{ $techno->nom }}
-            </button>
+            </a>
         @endforeach
     </div>
+
 </div>

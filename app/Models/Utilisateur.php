@@ -1,11 +1,19 @@
 <?php
     namespace App\Models;
 
+<<<<<<< HEAD
     use Illuminate\Foundation\Auth\User as Authenticatable;
     use Illuminate\Support\Str;
 
     class Utilisateur extends Authenticatable
     {
+=======
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
+
+class Utilisateur extends Authenticatable
+{
+>>>>>>> d656bf2 (final commit)
     public $incrementing = false;
     protected $keyType   = 'string';
 

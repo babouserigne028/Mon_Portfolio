@@ -7,13 +7,19 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+<<<<<<< HEAD
     // Affiche le formulaire de login
+=======
+>>>>>>> d656bf2 (final commit)
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+<<<<<<< HEAD
     // Gère la tentative de connexion
+=======
+>>>>>>> d656bf2 (final commit)
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -31,7 +37,10 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
+<<<<<<< HEAD
     // Déconnexion
+=======
+>>>>>>> d656bf2 (final commit)
     public function logout(Request $request)
     {
         Auth::logout();

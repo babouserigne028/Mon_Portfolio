@@ -1,14 +1,15 @@
 @extends('layouts.app')
 @section('content')
-    <x-header :nom="$utilisateur->nom" />
+    <x-header :nom="$utilisateur->nom" :prenom="$utilisateur->prenom" />
     <div class="pt-20">
-        <div class="max-w-8xl mx-auto px-6 lg:px-12 lg:py-12">
-            <div
-                class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start opacity-0 translate-y-2 animate-[fadeUp_400ms_ease-out_forwards]">
-                <x-A_propos.narative--section />
-                <x-A_propos.skills--section :technologies="$technologies" />
+        <section id="apropos" class="py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-16 items-start">
+                    <x-A_propos.narative--section :utilisateur="$utilisateur" />
+                    <x-A_propos.skills--section :technologies="$technologies" />
+                </div>
             </div>
-        </div>
+        </section>
+        <x-footer />
     </div>
-    <x-footer />
 @endsection

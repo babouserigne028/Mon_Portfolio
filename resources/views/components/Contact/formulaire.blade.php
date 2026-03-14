@@ -1,40 +1,67 @@
-<div class="bg-white rounded-2xl shadow-xl shadow-primary/5 border border-[#e7edf3] p-8 md:p-10">
-    <form action="#" class="space-y-5">
-        <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+<div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8">
+    <form action="#" method="POST" class="flex flex-col gap-6">
+        @csrf
+
+        <div class="grid md:grid-cols-2 gap-6">
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-bold text-[#0d141b]">Nom complet</label>
+                <label for="nom" class="text-sm font-medium text-white">Nom complet</label>
                 <input
-                    class="w-full px-4 py-3.5 rounded-lg border border-[#cfdbe7] bg-background-light focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-[#4c739a]/60"
-                    placeholder="kingston css" type="text" />
+                    id="nom"
+                    name="nom"
+                    type="text"
+                    required
+                    placeholder="Votre nom"
+                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white
+                           focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent
+                           transition-all duration-[250ms] placeholder:text-white/40 min-h-[44px]" />
             </div>
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-bold text-[#0d141b]">Adresse email</label>
+                <label for="email" class="text-sm font-medium text-white">Email</label>
                 <input
-                    class="w-full px-4 py-3.5 rounded-lg border border-[#cfdbe7] bg-background-light focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-[#4c739a]/60"
-                    placeholder="dar@example.com" type="email" />
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="votre@email.com"
+                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white
+                           focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent
+                           transition-all duration-[250ms] placeholder:text-white/40 min-h-[44px]" />
             </div>
         </div>
+
         <div class="flex flex-col gap-2">
-            <label class="text-sm font-bold text-[#0d141b]">Sujet</label>
+            <label for="sujet" class="text-sm font-medium text-white">Sujet</label>
             <input
-                class="w-full px-4 py-3.5 rounded-lg border border-[#cfdbe7] bg-background-light focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-[#4c739a]/60"
-                placeholder="Demande de projet" type="text" />
+                id="sujet"
+                name="sujet"
+                type="text"
+                required
+                placeholder="Sujet de votre message"
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white
+                       focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent
+                       transition-all duration-[250ms] placeholder:text-white/40 min-h-[44px]" />
         </div>
+
         <div class="flex flex-col gap-2">
-            <label class="text-sm font-bold text-[#0d141b]">Message</label>
+            <label for="message" class="text-sm font-medium text-white">Message</label>
             <textarea
-                class="w-full px-4 py-3.5 rounded-lg border border-[#cfdbe7] bg-background-light focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-none placeholder:text-[#4c739a]/60"
-                placeholder="Décrivez votre projet..." rows="5"></textarea>
+                id="message"
+                name="message"
+                rows="5"
+                required
+                placeholder="Décrivez votre projet..."
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white
+                       focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent
+                       transition-all duration-[250ms] resize-none placeholder:text-white/40"></textarea>
         </div>
+
         <button
-            class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-bold text-base shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2 group"
-            type="submit">
+            type="submit"
+            class="w-full py-4 bg-cta text-white rounded-lg hover:bg-cta/90 transition-all duration-300
+                   font-semibold min-h-[44px] cursor-pointer flex items-center justify-center gap-2">
             <span>Envoyer le message</span>
-            <span
-                class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">send</span>
+            <i data-lucide="send" class="w-5 h-5"></i>
         </button>
-        <p class="text-center text-xs text-[#4c739a] font-medium">
-            Je réponds généralement sous 24 à 48 heures.
-        </p>
+
     </form>
 </div>

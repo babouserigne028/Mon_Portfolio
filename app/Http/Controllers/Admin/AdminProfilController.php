@@ -20,6 +20,7 @@ class AdminProfilController extends Controller
     public function update(Request $request)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         // 1. On récupère l'utilisateur à modifier (celui qui est connecté)
         $utilisateur = Utilisateur::find(Auth::id());
 =======
@@ -53,29 +54,45 @@ class AdminProfilController extends Controller
             'last_name' => 'required|string|max:100',
             'email' => 'required|email|unique:utilisateurs,email,' . $user->id, 
             'apropos' => 'nullable|string',
+=======
+        $utilisateur = Utilisateur::find(Auth::id());
+
+        $request->validate([
+            'prenom'                => 'required|string|max:100',
+            'nom'                   => 'required|string|max:100',
+            'email'                 => 'required|email|unique:utilisateurs,email,' . $utilisateur->id,
+            'apropos'               => 'nullable|string',
+>>>>>>> d656bf2 (final commit)
             'nbre_annee_experience' => 'nullable|integer',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'lien_cv' => 'nullable|mimes:pdf|max:5000',
-            'password' => 'nullable|string|min:8',
+            'photo'                 => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'lien_cv'               => 'nullable|mimes:pdf|max:5000',
+            'password'              => 'nullable|string|min:8',
         ]);
 
-        $user->prenom = $request->first_name;
-        $user->nom = $request->last_name;
-        $user->email = $request->email;
-        
+        $utilisateur->prenom = $request->prenom;
+        $utilisateur->nom    = $request->nom;
+        $utilisateur->email      = $request->input('email');
+
         if (Schema::hasColumn('utilisateurs', 'apropos')) {
-            $user->apropos = $request->apropos;
+            $utilisateur->apropos = $request->input('apropos');
         }
         if (Schema::hasColumn('utilisateurs', 'nbre_annee_experience')) {
+<<<<<<< HEAD
             $user->nbre_annee_experience = $request->nbre_annee_experience;
 >>>>>>> a4de82a (Finalisation Admin Kingston : En utilisant Utilisateur)
+=======
+            $utilisateur->nbre_annee_experience = $request->input('nbre_annee_experience');
+>>>>>>> d656bf2 (final commit)
         }
 
         if ($request->hasFile('photo')) {
             if ($utilisateur->photo) {
                 Storage::disk('public')->delete($utilisateur->photo);
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d656bf2 (final commit)
             $utilisateur->photo = $request->file('photo')->store('profil', 'public');
         }
 
@@ -83,6 +100,7 @@ class AdminProfilController extends Controller
             if ($utilisateur->lien_cv) {
                 Storage::disk('public')->delete($utilisateur->lien_cv);
             }
+<<<<<<< HEAD
 
             $utilisateur->lien_cv = $request->file('lien_cv')->store('cv', 'public');
         }
@@ -99,14 +117,22 @@ class AdminProfilController extends Controller
         }
 =======
         
-        if ($request->filled('password')) {
-            // On enregistre dans "mot_de_passe"
-            $user->mot_de_passe = Hash::make($request->password);
+=======
+            $utilisateur->lien_cv = $request->file('lien_cv')->store('cv', 'public');
         }
 
+>>>>>>> d656bf2 (final commit)
+        if ($request->filled('password')) {
+            $utilisateur->mot_de_passe = Hash::make($request->password);
+        }
+
+<<<<<<< HEAD
         $user->save();
 >>>>>>> a4de82a (Finalisation Admin Kingston : En utilisant Utilisateur)
+=======
+        $utilisateur->save();
+>>>>>>> d656bf2 (final commit)
 
-        return redirect()->route('admin.profil.edit')->with('success', 'Profil Kingston mis à jour !');
+        return redirect()->route('admin.profil.edit')->with('success', 'Profil mis à jour !');
     }
 }

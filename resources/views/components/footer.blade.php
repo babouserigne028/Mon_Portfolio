@@ -1,27 +1,26 @@
-<footer class="border-t border-slate-200 py-12 px-6 md:px-12 bg-white">
-    <div class="max-w-8xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="flex flex-col gap-2 text-center md:text-left">
-            <p class="text-sm text-slate-500">
-                © 2026 Kingston &amp; Css.
+<footer class="py-8 bg-primary border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-white/60 text-sm">
+                &copy; {{ date('Y') }} Serigne Abdoulaye Babou. Tous droits réservés.
             </p>
-        </div>
-        <div class="flex gap-8">
-            <a class="text-sm text-slate-500 hover:text-primary transition-colors" href="#">Github</a>
-            <a class="text-sm text-slate-500 hover:text-primary transition-colors" href="#">LinkedIn</a>
-            <a class="text-sm text-slate-500 hover:text-primary transition-colors" href="#">Twitter</a>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                    class="text-white/60 hover:text-white transition-colors duration-[250ms] cursor-pointer"
+                    aria-label="GitHub">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                    class="text-white/60 hover:text-white transition-colors duration-[250ms] cursor-pointer"
+                    aria-label="LinkedIn">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                    class="text-white/60 hover:text-white transition-colors duration-[250ms] cursor-pointer"
+                    aria-label="Twitter/X">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                </a>
+            </div>
         </div>
     </div>
 </footer>
-<div class="fixed bottom-8 right-8 hidden lg:block">
-
-    <button
-        class="size-12 rounded-full bg-white border border-slate-200 shadow-xl flex items-center justify-center text-slate-400 hover:text-primary transition-colors">
-        <a href="#top"
-            class="size-12 rounded-full bg-white border border-slate-200 shadow-xl
-               flex items-center justify-center text-slate-400
-               hover:text-primary transition-colors"
-            aria-label="Retour en haut">
-            <span class="material-symbols-outlined">expand_less</span>
-        </a>
-    </button>
-</div>
