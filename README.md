@@ -1,119 +1,224 @@
 # Mon Portfolio Laravel
 
-> Portfolio web développé avec Laravel, mettant en avant mes compétences, projets et expériences.
-
-## Fonctionnalités
-
-# Mon_Portfolio_Laravel
-
-Portfolio web développé avec Laravel, Blade, Tailwind CSS et MySQL.
+Portfolio web développé avec Laravel 12, Blade, Tailwind CSS et MySQL.
 
 ## Fonctionnalités
 
 - Présentation dynamique de projets, technologies et domaines de compétence
-- Association des technologies aux domaines
 - Filtrage des projets par technologie
 - Interface responsive et moderne
-- Stockage d’images et fichiers dans public/storage
+- Espace d'administration protégé par authentification (CRUD projets, technologies, domaines, profil)
+- Stockage d'images via `storage/app/public`
 
-## Prérequis
+## Stack technique
 
-- PHP >= 8.3
-- Composer
+- PHP >= 8.2
+- Laravel 12
 - MySQL
-- Node.js & npm (pour assets front)
+- Tailwind CSS (via Vite)
+- Blade
 
-## Installation
+---
 
-1. Cloner le dépôt :
-    ```bash
-    git clone https://github.com/votre-utilisateur/Mon_Portfolio_Laravel.git
-    cd Mon_Portfolio_Laravel
-    ```
-2. Installer les dépendances :
-    ```bash
-    composer install
-    npm install
-    ```
-3. Configurer l’environnement :
-    - Copier `.env.example` en `.env` et adapter les variables (DB, mail, etc.)
-    - Générer la clé :
-        ```bash
-        php artisan key:generate
-        ```
-4. Préparer la base de données :
+## Installation locale (développement)
 
-    ```bash
-    php artisan migrate --seed
-    ```
+```bash
+git clone <url-du-repo>
+cd Mon_Portfolio_Laravel
 
-    Les seeders créent des données de démonstration avec des UUID fixes pour garantir la cohérence.
+composer install
+npm install
 
-5. Compiler les assets front :
+cp .env.example .env
+php artisan key:generate
 
-    ```bash
-    npm run build
-    ```
+# Configurer DB_* dans .env, puis :
+php artisan migrate
+php artisan storage:link
 
-6. Lancer le serveur :
-    ```bash
-    php artisan serve
-    ```
+npm run dev
+php artisan serve
+```
 
-## Stockage des fichiers
+Accès : [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-- Les fichiers nécessaires (images, etc.) sont dans `public/storage`.
-- Ce dossier est versionné pour garantir la reproductibilité.
-- Si besoin, créez le lien symbolique :
-    ```bash
-    php artisan storage:link
-    ```
+---
 
-## Structure des données
+## Déploiement en production
 
-- Les seeders utilisent des UUID et valeurs fixes pour tous les projets, technologies, domaines et associations.
-- Après chaque clonage, lancez `php artisan migrate --seed` pour retrouver les mêmes données.
+### 1. Prérequis serveur
 
-## Sécurité
+- PHP >= 8.2 avec extensions : `mbstring`, `pdo_mysql`, `xml`, `fileinfo`, `curl`, `gd`
+- Composer
+- Node.js & npm (build des assets uniquement)
+- MySQL
+- Serveur web : Apache ou Nginx (document root → `public/`)
 
-- Ne stockez pas de données sensibles dans les seeders.
-- Les mots de passe de démo sont hashés.
+---
 
-## Contribution
+### 2. Cloner et installer les dépendances
 
-1. Forkez le projet
-2. Créez une branche
-3. Proposez vos modifications via une Pull Request
+```bash
+git clone <url-du-repo>
+cd Mon_Portfolio_Laravel
 
-## Licence
+composer install --no-dev --optimize-autoloader
+npm install
+npm run build
+```
 
-Ce projet est sous licence MIT.
+---
 
-## Auteur
+### 3. Configurer l'environnement
 
-Serigne Abdoulaye Babou
+```bash
+cp .env.example .env
+```
 
-## Installation
+Adapter les variables dans `.env` :
 
-1. Clonez le dépôt :
-    ```bash
-    git clone <url-du-repo>
-    ```
-2. Installez les dépendances :
-    ```bash
-    composer install
-    npm install && npm run build
-    ```
-3. Configurez le fichier `.env` (copiez `.env.example`)
-4. Lancez le serveur :
-    ```bash
-    php artisan serve
-    ```
+```dotenv
+APP_NAME="Mon Portfolio"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://votre-domaine.com
 
-## Utilisation
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=portfolio_db
+DB_USERNAME=votre_utilisateur
+DB_PASSWORD=votre_mot_de_passe
 
-- Accédez à l’application sur [http://127.0.0.1:8000](http://127.0.0.1:8000)
-- Modifiez les sections dans `resources/views/components` pour personnaliser le contenu
+# Optionnel : email de contact
+MAIL_MAILER=smtp
+MAIL_HOST=...
+MAIL_PORT=587
+MAIL_USERNAME=...
+MAIL_PASSWORD=...
+MAIL_FROM_ADDRESS=contact@votre-domaine.com
+```
+
+> **Important :** `APP_DEBUG=false` est obligatoire en production pour ne pas exposer les traces d'erreur.
+
+---
+
+### 4. Générer la clé et migrer la base
+
+```bash
+php artisan key:generate
+php artisan migrate --force
+php artisan storage:link
+```
+
+---
+
+### 5. Optimiser pour la production
+
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
+```
+
+Pour effacer les caches (après une mise à jour) :
+
+```bash
+php artisan optimize:clear
+```
+
+---
+
+### 6. Permissions des dossiers
+
+```bash
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+---
+
+### 7. Configuration Nginx (exemple)
+
+```nginx
+server {
+    listen 80;
+    server_name votre-domaine.com;
+    root /var/www/Mon_Portfolio_Laravel/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+
+> Pour Apache, activer `mod_rewrite` et s'assurer que le `.htaccess` de `public/` est actif (`AllowOverride All`).
+
+---
+
+### 8. Créer le compte administrateur
+
+Après la migration, créer le premier compte admin via Tinker :
+
+```bash
+php artisan tinker
+```
+
+```php
+\App\Models\Utilisateur::create([
+    'name'     => 'Votre Nom',
+    'email'    => 'admin@votre-domaine.com',
+    'password' => bcrypt('mot_de_passe_securise'),
+]);
+```
+
+Accès admin : `https://votre-domaine.com/login`
+
+---
+
+### 9. Mise à jour de l'application
+
+```bash
+git pull origin main
+composer install --no-dev --optimize-autoloader
+npm run build
+php artisan migrate --force
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+---
+
+## Structure des routes
+
+| URL | Description |
+|-----|-------------|
+| `/` | Page d'accueil |
+| `/projet` | Liste des projets |
+| `/a_propos` | À propos |
+| `/contact` | Contact |
+| `/login` | Connexion admin |
+| `/admin` | Dashboard admin (authentifié) |
+| `/admin/projets` | CRUD projets |
+| `/admin/technologies` | CRUD technologies |
+| `/admin/domaines` | CRUD domaines |
+| `/admin/profil` | Gestion du profil |
+
+---
 
 ## Auteur
 
