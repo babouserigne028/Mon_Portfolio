@@ -45,6 +45,7 @@
                             data-nom="{{ $projet->nom }}"
                             data-description="{{ $projet->description }}"
                             data-image="{{ $projet->image_couverture }}"
+                            data-lien="{{ $projet->lien_projet }}"
                             data-technologies="{{ json_encode($projet->technologies->pluck('id')) }}">
                             <span class="material-symbols-outlined">edit_square</span>
                         </button>

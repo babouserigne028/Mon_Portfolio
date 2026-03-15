@@ -28,12 +28,14 @@ class AdminProjetController extends Controller
         $request->validate([
             'nom' => 'required|max:200',
             'description' => 'required',
-            'image_couverture' => 'required|image|mimes:jpg,png,jpeg|max:2048', // Validation image
+            'image_couverture' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'lien_projet' => 'nullable|url|max:500',
         ]);
 
         $projet = new Projet();
         $projet->nom = $request->nom;
         $projet->description = $request->description;
+        $projet->lien_projet = $request->lien_projet;
 
         if ($request->hasFile('image_couverture')) {
             $path = $request->file('image_couverture')->store('projects', 'public');
@@ -64,10 +66,12 @@ class AdminProjetController extends Controller
             'nom' => 'required|max:200',
             'description' => 'required',
             'image_couverture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'lien_projet' => 'nullable|url|max:500',
         ]);
 
         $projet->nom = $request->nom;
         $projet->description = $request->description;
+        $projet->lien_projet = $request->lien_projet;
 
         if ($request->hasFile('image_couverture')) {
             if ($projet->image_couverture) {

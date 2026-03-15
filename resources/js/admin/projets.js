@@ -50,12 +50,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const nom         = this.dataset.nom;
             const description = this.dataset.description;
             const image       = this.dataset.image;
+            const lien        = this.dataset.lien;
             const techIds     = JSON.parse(this.dataset.technologies || '[]');
 
             // Remplir le formulaire
             document.getElementById('editProjetForm').action = '/admin/projets/' + id;
             document.getElementById('editProjetNom').value         = nom;
             document.getElementById('editProjetDescription').value = description;
+            document.getElementById('editProjetLien').value        = lien || '';
 
             // Image preview
             const preview = document.getElementById('editProjetImagePreview');

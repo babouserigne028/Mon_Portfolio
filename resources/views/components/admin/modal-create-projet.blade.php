@@ -59,6 +59,16 @@
                 @error('image_couverture') <p class="text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
 
+            {{-- Lien du projet --}}
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold uppercase tracking-wider text-secondary">Lien du projet <span class="text-secondary/50 font-normal normal-case">(optionnel)</span></label>
+                <input type="url" name="lien_projet"
+                    class="w-full rounded-xl border border-primary/10 bg-primary/5 px-4 py-3 text-sm font-medium text-primary
+                           outline-none focus:border-cta focus:ring-2 focus:ring-cta/10 transition-all placeholder:text-secondary/40"
+                    placeholder="https://mon-projet.com">
+                @error('lien_projet') <p class="text-xs text-red-500">{{ $message }}</p> @enderror
+            </div>
+
             {{-- Technologies --}}
             <div class="space-y-1.5">
                 <label class="text-xs font-bold uppercase tracking-wider text-secondary">Technologies</label>

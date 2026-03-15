@@ -10,7 +10,7 @@ class Projet extends Model
     protected $keyType   = 'string';
 
     protected $fillable = [
-        'id', 'nom', 'description', 'image_couverture',
+        'id', 'nom', 'description', 'image_couverture', 'lien_projet',
     ];
 
     protected static function boot()
