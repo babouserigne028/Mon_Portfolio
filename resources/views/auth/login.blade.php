@@ -53,17 +53,23 @@
 
                 <div class="flex flex-col gap-1.5">
                     <label for="password" class="text-sm font-medium text-primary">Mot de passe</label>
-                    <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        required
-                        autocomplete="current-password"
-                        placeholder="••••••••"
-                        class="w-full px-4 py-3 bg-background border border-primary/20 rounded-lg text-primary
-                               focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent
-                               transition-all duration-[250ms] placeholder:text-secondary/50 min-h-[44px]
-                               @error('password') border-error @enderror" />
+                    <div class="relative">
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            required
+                            autocomplete="current-password"
+                            placeholder="••••••••"
+                            class="w-full px-4 py-3 pr-12 bg-background border border-primary/20 rounded-lg text-primary
+                                   focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent
+                                   transition-all duration-[250ms] placeholder:text-secondary/50 min-h-[44px]
+                                   @error('password') border-error @enderror" />
+                        <button type="button" onclick="togglePassword()"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-primary transition-colors cursor-pointer">
+                            <i id="eye-icon" data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                     @error('password')
                         <p class="text-xs text-error font-medium">{{ $message }}</p>
                     @enderror
@@ -97,5 +103,6 @@
 
     </div>
 
+    @vite('resources/js/auth/login.js')
 </body>
 </html>
