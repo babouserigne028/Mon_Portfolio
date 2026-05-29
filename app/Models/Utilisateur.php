@@ -28,4 +28,9 @@ class Utilisateur extends Authenticatable
     {
         return $this->mot_de_passe;
     }
+
+    public function getAuthPasswordName()
+    {
+        return 'mot_de_passe';
+    }
 }
